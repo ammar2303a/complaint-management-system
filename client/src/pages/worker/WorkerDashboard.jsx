@@ -1,7 +1,11 @@
 import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useEffect } from "react";
 
 function WorkerDashboardLayout() {
+  const [allcomp, setAllcomp] =useState([])
     const navigate = useNavigate()
     const logoutSubmit = ()=>{
         localStorage.removeItem("token")
@@ -11,6 +15,14 @@ function WorkerDashboardLayout() {
         navigate("/login")
 
     }
+
+    const fetchComplaint = async()=>{
+      const res = await axios.get("http://localhost:3000/api/complaint/")
+      setAllcomp(res.data)
+    }
+    useEffect(()=>{
+      fetchComplaint()
+    },[])
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
 
@@ -41,7 +53,11 @@ function WorkerDashboardLayout() {
           padding: "20px",
           backgroundColor: "#fff"
         }}>
-          {/* Complaints will appear here */}
+          {allcomp.map((comp, index)=>(
+            <div key={index}>
+            <h4>Customer name</h4><span>{comp.name}</span>
+            </div>
+          ))}
         </div>
       </div>
 

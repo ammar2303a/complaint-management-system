@@ -5,15 +5,21 @@ import express from "express"
 const router = express.Router()
 
 router.post("/create", async (req,res)=>{
-    const {userId, name , complaintphone, address, complaintText, model} = req.body;
-    const postComplaint = new Complaint({userId,name,complaintphone,address,complaintText,model})
+    const {userId, name , complaintphone, address, complaintText, model, workerId} = req.body;
+    const postComplaint = new Complaint({userId,name,complaintphone,address,complaintText,model, workerId})
     await postComplaint.save();
     res.status(201).send("Complaint Send Successfully") 
 })
 
 router.get("/", async(req, res)=>{
-    const getComp = await Complaint.find().populate("model", "name model");
+    const getComp = await Complaint.find().populate("model", "name model").populate("workerId", "name");
     res.json(getComp)
+})
+
+router.put("/:id", async(req, res)=>{
+    const {id} = req.params;
+    const updComplaint = await Complaint.findByIdAndUpdate(id, req.body, {new:true})
+    res.json(updComplaint)
 })
 
 // const test = async () => {

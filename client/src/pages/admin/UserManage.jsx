@@ -7,6 +7,7 @@ function UserManage() {
   const [alluser, setUser] = useState([])
   const [selectedUserId, setSelectedUserId] = useState("");
   const [role, setRole] = useState("")
+  
   console.log("Role change: ",role);
   
 

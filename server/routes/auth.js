@@ -48,16 +48,21 @@ router.post("/login", async (req, res)=>{
        res.json(updateuser)
     })
 
-    router.delete("/:id", async (req,res) =>{
+    router.delete("/:comptid", async (req,res) =>{
         const {id} = req.params;
         await User.findByIdAndDelete(id)
         res.json({message: 'User deleted successfully' })
     })
 
-    // router.get("/:role", async (req,res)=>{
-    //     const {role} = req.params;
-    //     const workers = await User.find(role === 'worker')
-    //     res.json(workers)
-    // })
+    // Get only users with role 'worker'
+router.get("/workers", async (req, res) => {
+  try {
+    const workers = await User.find({ role: "worker" }); // filter by role
+    res.json(workers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 export default router

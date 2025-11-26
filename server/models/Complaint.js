@@ -37,6 +37,7 @@ const ComplaintSchema = new mongoose.Schema(
       enum: ["pending", "in-progress", "completed"],
       default: "pending",
     },
+    workerId: { type: mongoose.Schema.Types.ObjectId, ref: "users", default: null }
   },
   { timestamps: true }
 );
