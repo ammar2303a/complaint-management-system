@@ -11,6 +11,7 @@ import ProductAdd from "./pages/admin/ProductAdd"
 import WorkerLayout from "./components/worker/WorkerLayout"
 import WorkerDashboard from "./pages/worker/WorkerDashboard"
 import ComplaintAssign from "./pages/admin/ComplaintAssign"
+import CheckComplaint from "./pages/CheckComplaint"
 
 function App() {
   
@@ -43,6 +44,7 @@ function App() {
         <UserLayout>
           <Routes>
           <Route path="/" element={<Home/>}/>
+          <Route path="/check" element={<CheckComplaint/>}/>
           <Route path='/register' element={<Register/>}/>
       <Route path='/login' element={<Login/>}/>
           </Routes>

@@ -16,6 +16,19 @@ router.get("/", async(req, res)=>{
     res.json(getComp)
 })
 
+router.get("/worker/:workerId", async(req,res)=>{
+    const {workerId} = req.params;
+    const getonlyworker = await Complaint.find({workerId}).populate("model", "name")
+    .populate("workerId", "name")
+    res.json(getonlyworker)
+})
+
+router.put("/status/:id", async (req,res)=>{
+    const {id} = req.params;
+    const updCompt = await Complaint.findByIdAndUpdate(id, req.body, {new:true})
+    res.json(updCompt)
+})
+
 router.put("/:id", async(req, res)=>{
     const {id} = req.params;
     const updComplaint = await Complaint.findByIdAndUpdate(id, req.body, {new:true})

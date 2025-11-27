@@ -20,6 +20,7 @@ function Nav() {
         {/* <Link to="/complaints" style={styles.link}>Complaints</Link> */}
         {!token ? (
             <>
+             <Link to="/check" style={styles.link}>MyComplaint</Link>
             <Link to="/login" style={styles.link}>Login</Link>
         <Link to="/register" style={styles.link}>Register</Link>
         </>
