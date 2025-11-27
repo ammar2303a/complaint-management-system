@@ -8,15 +8,19 @@ function WorkerDashboardLayout() {
   const [allcomp, setAllcomp] =useState([])
   const [selectedId, setAllselectedId] = useState('')
   const [status, setStatus] = useState('') 
+  const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const logoutSubmit = ()=>{
-        localStorage.removeItem("token")
-        localStorage.removeItem("id")
-        localStorage.removeItem("role")
-         localStorage.removeItem("isadmin")
-        navigate("/login")
-
-    }
+        const logoutSubmit = () => {
+      setLoading(true);
+  setTimeout(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("isAdmin");
+    setLoading(false); 
+    navigate("/login");
+  }, 1500); // 1 second delay
+};
 
    
 
@@ -63,7 +67,16 @@ function WorkerDashboardLayout() {
           <li style={{ padding: "10px 0", cursor: "pointer" }}>Dashboard</li>
           <li style={{ padding: "10px 0", cursor: "pointer" }}>Complaints</li>
           <li style={{ padding: "10px 0", cursor: "pointer" }}>Profile</li>
-          <li style={{ padding: "10px 0", cursor: "pointer" }} onClick={logoutSubmit}>Logout</li>
+          <li style={{ padding: "10px 0", cursor: "pointer", listStyle: "none" }}>
+  {loading ? (
+    <div style={styles.spinner}></div>   // spinner ghoomta hua
+  ) : (
+    <span onClick={logoutSubmit} style={{ color: "#fff" }}>
+      Logout
+    </span>
+  )}
+</li>
+
         </ul>
       </div>
 
@@ -188,5 +201,15 @@ function WorkerDashboardLayout() {
   );
 }
 
+const styles = {
+  spinner: {
+  border: "4px solid #f3f3f3",
+  borderTop: "4px solid #fff",
+  borderRadius: "50%",
+  width: "18px",
+  height: "18px",
+  animation: "spin 1s linear infinite"
+}
+}
 export default WorkerDashboardLayout;
 

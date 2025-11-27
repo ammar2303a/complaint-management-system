@@ -35,22 +35,12 @@ router.put("/:id", async(req, res)=>{
     res.json(updComplaint)
 })
 
-// const test = async () => {
-//   try {
-//     const complaint = new Complaint({
-//       userId: new mongoose.Types.ObjectId("6926217efefa5d63ae88b667"),
-//       name: "Habib Khan",
-//       complaintphone: "99990004",
-//       complaintText: "i have Some issues my fridge",
-//       model: new mongoose.Types.ObjectId("692072f31213d12cff2a2073") // ObjectId
-//     });
-//     await complaint.save();
-//     console.log("Complaint saved!");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+router.get("/mycomplaint/:userId", async (req,res)=>{
+    const {userId} = req.params;
+    const getonlyUserComp = await Complaint.find({userId}).populate("workerId", "name phone")
+    .populate("model", "name");
+    res.json(getonlyUserComp)
+})
 
-// test();
 
 export default router

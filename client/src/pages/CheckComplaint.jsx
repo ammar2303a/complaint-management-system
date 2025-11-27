@@ -5,7 +5,8 @@ function CheckComplaint() {
     const [allcomp, setAllcomp] = useState([])
 
     const fetchComp = async()=>{
-        const res = await axios.get("http://localhost:3000/api/complaint/")
+      const userId = localStorage.getItem("id")
+        const res = await axios.get(`http://localhost:3000/api/complaint/mycomplaint/${userId}`)
         setAllcomp(res.data)
     }
 
@@ -34,12 +35,16 @@ function CheckComplaint() {
               {allcomp.map((comp, i)=>(
                 <tr key={i}>
                 <td>{comp._id}</td>
-                <td>Sample issue 1</td>
-                <td>Pending</td>
-                <td>Worker Name</td>
-                <td>0000000000</td>
-                <td>Model Name</td>
-                <td>DD/MM/YYYY</td>
+                <td>{comp.complaintText}</td>
+                <td style={{
+                  color: comp.status === "pending" ? "orange":
+                  comp.status === "in-progress" ? "green":
+                  comp.status === "completed" ? "red": "black"
+                }}>{comp.status}</td>
+                <td>{comp.workerId?.name}</td>
+                <td>{comp.workerId?.phone}</td>
+                <td>{comp.model?.name}</td>
+                <td>{comp.createdAt}</td>
               </tr>
               ))}
               
